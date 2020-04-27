@@ -1,6 +1,9 @@
 package com.gzeinnumer.daggerpracticekt.ui.auth
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.gzeinnumer.daggerpracticekt.network.authApi.AuthApi
 import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
@@ -41,5 +44,23 @@ class AuthVM @Inject constructor(
 
                 override fun onComplete() {}
             })
+    }
+
+    private val authUser = MediatorLiveData<ResponseLogin>()
+    fun authWithId(userId: Int) {
+        val source = LiveDataReactiveStreams.fromPublisher(
+            authApi.getUser(userId)
+                .subscribeOn(Schedulers.io())
+        )
+        authUser.addSource(
+            source
+        ) { responseLogin ->
+            authUser.value = responseLogin
+            authUser.removeSource(source)
+        }
+    }
+
+    fun observeUser(): LiveData<ResponseLogin>? {
+        return authUser
     }
 }
