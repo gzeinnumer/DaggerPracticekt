@@ -1,5 +1,6 @@
 package com.gzeinnumer.daggerpracticekt.ui.auth
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.ui.main.MainActivity
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -79,6 +81,7 @@ class AuthActivity : DaggerAppCompatActivity() {
                                 TAG,
                                 "onChanged: Login AUTHENTICATED " + it.data?.email
                             )
+                            onLoginSuccess()
                         }
                         AuthResource.AuthStatus.ERROR -> {
                             showLoading(false)
@@ -90,5 +93,12 @@ class AuthActivity : DaggerAppCompatActivity() {
                         AuthResource.AuthStatus.NOT_AUTHENTICATED -> showLoading(false)
                     }
                 })
+    }
+
+
+    private fun onLoginSuccess() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
