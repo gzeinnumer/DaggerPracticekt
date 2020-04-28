@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -57,12 +58,38 @@ class AuthActivity : DaggerAppCompatActivity() {
             .into((findViewById<View>(R.id.login_logo) as ImageView))
     }
 
+    private var progressBar: ProgressBar? = null
+    private fun showLoading(isVisible: Boolean) {
+        if (isVisible) {
+            progressBar!!.visibility = View.VISIBLE
+        } else {
+            progressBar!!.visibility = View.GONE
+        }
+    }
+
     private fun subcribeObservers() {
-        viewModel.observeUser()?.observe(this,
-            Observer { responseLogin ->
-                if (responseLogin != null) {
-                    Log.d(TAG, "onChanged: " + responseLogin.email)
-                }
-            })
+        progressBar = findViewById(R.id.progress_bar)
+        viewModel.observeUser()
+            .observe(this,
+                Observer {
+                    when (it.status) {
+                        AuthResource.AuthStatus.LOADING -> showLoading(true)
+                        AuthResource.AuthStatus.AUTHENTICATED -> {
+                            showLoading(false)
+                            Log.d(
+                                TAG,
+                                "onChanged: Login AUTHENTICATED " + it.data?.email
+                            )
+                        }
+                        AuthResource.AuthStatus.ERROR -> {
+                            showLoading(false)
+                            Log.d(
+                                TAG,
+                                "onChanged: Login ERROR " + it.message.toString() + " Only 1-10 Number avaliable"
+                            )
+                        }
+                        AuthResource.AuthStatus.NOT_AUTHENTICATED -> showLoading(false)
+                    }
+                })
     }
 }

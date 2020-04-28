@@ -7,12 +7,12 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.gzeinnumer.daggerpracticekt.network.authApi.AuthApi
 import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 //ingat object yang ada didalam function yang di inject, itu sudah ada di @Provide Module
+@Suppress("CAST_NEVER_SUCCEEDS", "SENSELESS_COMPARISON")
 class AuthVM @Inject constructor(
     private val authApi: AuthApi
 ) : ViewModel() {
@@ -28,39 +28,41 @@ class AuthVM @Inject constructor(
         } else {
             Log.d(TAG, "AuthVM: api is not NULL")
         }
-
-        authApi.getUser(1)
-            .toObservable()
-            .subscribeOn(Schedulers.io())
-            .subscribe(object : Observer<ResponseLogin> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(responseLogin: ResponseLogin) {
-                    Log.d(TAG, "onNext: " + responseLogin.email)
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.d(TAG, "onError: " + e.message)
-                }
-
-                override fun onComplete() {}
-            })
     }
 
-    private val authUser = MediatorLiveData<ResponseLogin>()
+    private val authUser = MediatorLiveData<AuthResource<ResponseLogin>>()
     fun authWithId(userId: Int) {
-        val source = LiveDataReactiveStreams.fromPublisher(
+
+        authUser.value = AuthResource.loading()
+
+        val source: LiveData<AuthResource<ResponseLogin>> = LiveDataReactiveStreams.fromPublisher(
             authApi.getUser(userId)
+                .onErrorReturn {
+                    val responseLogin = ResponseLogin()
+                    responseLogin.id = -1
+                    responseLogin
+                }
+                .map(object : Function<ResponseLogin, AuthResource<ResponseLogin>>{
+                    override fun apply(responseLogin: ResponseLogin): AuthResource<ResponseLogin> {
+                        if(responseLogin.id == -1){
+                            return AuthResource.error("Could not aurhenticate")
+                        }
+                        return AuthResource.authenticated(responseLogin)
+                    }
+                })
                 .subscribeOn(Schedulers.io())
         )
-        authUser.addSource(
-            source
-        ) { responseLogin ->
-            authUser.value = responseLogin
-            authUser.removeSource(source)
+        authUser.run {
+            addSource(
+                source
+            ) { responseLoginAuthResource ->
+                value = responseLoginAuthResource
+                removeSource(source)
+            }
         }
     }
 
-    fun observeUser(): LiveData<ResponseLogin>? {
+    fun observeUser(): LiveData<AuthResource<ResponseLogin>> {
         return authUser
     }
 }

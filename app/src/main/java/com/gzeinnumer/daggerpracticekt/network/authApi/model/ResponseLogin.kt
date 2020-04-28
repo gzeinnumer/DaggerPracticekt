@@ -20,7 +20,7 @@ data class ResponseLogin(
 	val company: Company? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+    var id: Int? = null,
 
 	@field:SerializedName("email")
 	val email: String? = null,
