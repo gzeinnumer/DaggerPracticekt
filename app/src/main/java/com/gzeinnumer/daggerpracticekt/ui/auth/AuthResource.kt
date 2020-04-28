@@ -23,7 +23,7 @@ class AuthResource<T> private constructor(
             return AuthResource(AuthStatus.LOADING, null, null)
         }
 
-        fun <T> logout(): AuthResource<T?> {
+        fun <T> logout(): AuthResource<T> {
             return AuthResource(AuthStatus.NOT_AUTHENTICATED, null, null)
         }
     }

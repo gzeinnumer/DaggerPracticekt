@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.gzeinnumer.daggerpracticekt.SessionManager
 import com.gzeinnumer.daggerpracticekt.network.authApi.AuthApi
 import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
 import io.reactivex.functions.Function
@@ -14,7 +15,8 @@ import javax.inject.Inject
 //ingat object yang ada didalam function yang di inject, itu sudah ada di @Provide Module
 @Suppress("CAST_NEVER_SUCCEEDS", "SENSELESS_COMPARISON")
 class AuthVM @Inject constructor(
-    private val authApi: AuthApi
+    private val authApi: AuthApi,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     companion object {
@@ -32,10 +34,16 @@ class AuthVM @Inject constructor(
 
     private val authUser = MediatorLiveData<AuthResource<ResponseLogin>>()
     fun authWithId(userId: Int) {
+        Log.d(TAG, "authWithId: attempting to login")
+        sessionManager.authenticatedWithId(queryUserId(userId))
+    }
 
-        authUser.value = AuthResource.loading()
+    fun observeAuthState(): LiveData<AuthResource<ResponseLogin>> {
+        return sessionManager.authUser;
+    }
 
-        val source: LiveData<AuthResource<ResponseLogin>> = LiveDataReactiveStreams.fromPublisher(
+    private fun queryUserId(userId: Int): LiveData<AuthResource<ResponseLogin>> {
+        return LiveDataReactiveStreams.fromPublisher(
             authApi.getUser(userId)
                 .onErrorReturn {
                     val responseLogin = ResponseLogin()
@@ -52,17 +60,5 @@ class AuthVM @Inject constructor(
                 })
                 .subscribeOn(Schedulers.io())
         )
-        authUser.run {
-            addSource(
-                source
-            ) { responseLoginAuthResource ->
-                value = responseLoginAuthResource
-                removeSource(source)
-            }
-        }
-    }
-
-    fun observeUser(): LiveData<AuthResource<ResponseLogin>> {
-        return authUser
     }
 }

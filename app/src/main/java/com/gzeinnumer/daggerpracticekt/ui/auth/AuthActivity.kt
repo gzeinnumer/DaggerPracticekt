@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.gzeinnumer.daggerpracticekt.R
-import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -69,7 +68,7 @@ class AuthActivity : DaggerAppCompatActivity() {
 
     private fun subcribeObservers() {
         progressBar = findViewById(R.id.progress_bar)
-        viewModel.observeUser()
+        viewModel.observeAuthState()
             .observe(this,
                 Observer {
                     when (it.status) {

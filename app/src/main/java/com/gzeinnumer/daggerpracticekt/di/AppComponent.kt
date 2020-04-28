@@ -2,6 +2,7 @@ package com.gzeinnumer.daggerpracticekt.di
 
 import android.app.Application
 import com.gzeinnumer.daggerpracticekt.BaseApplication
+import com.gzeinnumer.daggerpracticekt.SessionManager
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -25,4 +26,6 @@ interface AppComponent : AndroidInjector<BaseApplication> {
         fun application(application: Application): Builder
         fun build(): AppComponent
     }
+
+    fun sessionManager(): SessionManager
 }
