@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.gzeinnumer.daggerpracticekt.BaseActivity
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.ui.main.profile.ProfileFragment
 
 class MainActivity : BaseActivity() {
     private val TAG = "MainActivity"
@@ -16,6 +17,14 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         Log.d(TAG, "onCreate: created")
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
+
+        initFragment()
+    }
+
+
+    private fun initFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ProfileFragment()).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
