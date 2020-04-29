@@ -1,9 +1,11 @@
 package com.gzeinnumer.daggerpracticekt.di
 
 import com.gzeinnumer.daggerpracticekt.di.auth.AuthModule
+import com.gzeinnumer.daggerpracticekt.di.auth.AuthScope
 import com.gzeinnumer.daggerpracticekt.di.auth.AuthViewModelsModule
 import com.gzeinnumer.daggerpracticekt.di.main.MainFragmentBuilderModule
 import com.gzeinnumer.daggerpracticekt.di.main.MainModule
+import com.gzeinnumer.daggerpracticekt.di.main.MainScope
 import com.gzeinnumer.daggerpracticekt.di.main.MainViewModelsModule
 import com.gzeinnumer.daggerpracticekt.ui.auth.AuthActivity
 import com.gzeinnumer.daggerpracticekt.ui.main.MainActivity
@@ -25,11 +27,13 @@ abstract class ActivityBuilderModule{
 //    @ContributesAndroidInjector
 //    abstract fun constributeAuthActivity(): AuthActivity
     //for u only
+    @AuthScope
     @ContributesAndroidInjector(
         modules = [AuthViewModelsModule::class, AuthModule::class]
     )
     abstract fun constributeAuthActivity(): AuthActivity
 
+    @MainScope
     @ContributesAndroidInjector(
         modules = [MainFragmentBuilderModule::class, MainViewModelsModule::class, MainModule::class]
     )
