@@ -11,12 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f39d03c-14e5-4814-8036-948ef381c930" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/auth/AuthScope.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/main/MainScope.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/ActivityBuilderModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/ActivityBuilderModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/AppModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/auth/AuthModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/auth/AuthModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/main/MainModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/di/main/MainModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/ui/main/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gzeinnumer/daggerpracticekt/ui/main/MainActivity.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +22,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pie_5.5" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="G4AZFG013504BCC" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -259,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588195314556</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary=".">
+      <created>1588197042234</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1588197042234</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

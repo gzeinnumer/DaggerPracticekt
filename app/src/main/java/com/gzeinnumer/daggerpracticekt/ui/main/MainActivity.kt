@@ -13,6 +13,9 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import com.gzeinnumer.daggerpracticekt.BaseActivity
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
+import javax.inject.Inject
+import javax.inject.Named
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val TAG = "MainActivity"
@@ -27,6 +30,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
 
         initFragment()
+
+//        initScopeExample()
     }
 
 
@@ -91,4 +96,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return destination != Navigation.findNavController(this, R.id.nav_host_fragment)
             .currentDestination!!.id
     }
+
+//    @Inject
+//    @Named("app_login")
+//    lateinit var responseLogin1: ResponseLogin
+//
+//    @Inject
+//    @Named("auth_login")
+//    lateinit var responseLogin2: ResponseLogin
+//
+//    private fun initScopeExample() {
+//        Log.d(TAG, "initScopeExample: $responseLogin1")
+//        Log.d(TAG, "initScopeExample: $responseLogin2")
+//    }
 }

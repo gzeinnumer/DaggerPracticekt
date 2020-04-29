@@ -7,12 +7,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
 import com.gzeinnumer.daggerpracticekt.util.Constant
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -55,4 +57,15 @@ class AppModule{
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    //scope-example
+    //disini memori tidak akan di create ulang
+    //@Named untuk membuat 2 buah @Provides yang me return hal yang sama, kita butuh menggunakan @Named
+    //dan gunakan @Named dinawah @Inject, lihat di MainActivity
+//    @Singleton
+//    @Provides
+//    @Named("app_login")
+//    fun responseLogin1(): ResponseLogin {
+//        return ResponseLogin()
+//    }
 }
