@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
+import com.gzeinnumer.daggerpracticekt.ui.auth.AuthResource
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
 /**
@@ -36,6 +40,37 @@ class ProfileFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "onViewCreated: ProfileFragment was created")
         viewModel = ViewModelProviders.of(this, providerFactory).get(ProfileVM::class.java)
+        subscribeObservers()
     }
 
+    private fun subscribeObservers() {
+        viewModel.getAuthenticationUser().removeObservers(viewLifecycleOwner)
+        viewModel.getAuthenticationUser().observe(
+            viewLifecycleOwner,
+            Observer { responseLoginAuthResource ->
+                if (responseLoginAuthResource != null) {
+                    when (responseLoginAuthResource.status) {
+                        AuthResource.AuthStatus.AUTHENTICATED -> responseLoginAuthResource.data?.let {
+                            setUserDetails(it)
+                        }
+                        AuthResource.AuthStatus.ERROR -> responseLoginAuthResource.message?.let {
+                            setErrorDetails(it)
+                        }
+                    }
+                }
+            })
+    }
+
+
+    private fun setUserDetails(data: ResponseLogin) {
+        email.text = data.email
+        username.text = data.username
+        website.text = data.website
+    }
+
+    private fun setErrorDetails(message: String) {
+        email.text = message
+        username.text = "error"
+        website.text = "error"
+    }
 }
