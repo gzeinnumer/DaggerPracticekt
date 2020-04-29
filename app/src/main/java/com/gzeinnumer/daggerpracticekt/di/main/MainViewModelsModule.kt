@@ -2,6 +2,7 @@ package com.gzeinnumer.daggerpracticekt.di.main
 
 import androidx.lifecycle.ViewModel
 import com.gzeinnumer.daggerpracticekt.di.ViewModelKey
+import com.gzeinnumer.daggerpracticekt.ui.main.post.PostVM
 import com.gzeinnumer.daggerpracticekt.ui.main.profile.ProfileVM
 import dagger.Binds
 import dagger.Module
@@ -13,4 +14,9 @@ abstract class MainViewModelsModule {
     @IntoMap
     @ViewModelKey(ProfileVM::class)
     abstract fun bidProfileViewModel(profileVM: ProfileVM): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PostVM::class)
+    abstract fun bidPostViewModel(postVM: PostVM): ViewModel
 }

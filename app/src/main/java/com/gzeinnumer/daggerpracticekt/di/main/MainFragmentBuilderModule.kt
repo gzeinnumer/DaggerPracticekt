@@ -1,5 +1,6 @@
 package com.gzeinnumer.daggerpracticekt.di.main
 
+import com.gzeinnumer.daggerpracticekt.ui.main.post.PostFragment
 import com.gzeinnumer.daggerpracticekt.ui.main.profile.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -8,4 +9,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class MainFragmentBuilderModule {
     @ContributesAndroidInjector
     abstract fun constributeProfileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun constributePostFragment(): PostFragment
 }

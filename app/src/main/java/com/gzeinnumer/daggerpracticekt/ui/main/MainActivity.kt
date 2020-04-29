@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.gzeinnumer.daggerpracticekt.BaseActivity
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.ui.main.post.PostFragment
 import com.gzeinnumer.daggerpracticekt.ui.main.profile.ProfileFragment
 
 class MainActivity : BaseActivity() {
@@ -23,8 +24,8 @@ class MainActivity : BaseActivity() {
 
 
     private fun initFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, ProfileFragment()).commit()
+//        supportFragmentManager.beginTransaction().replace(R.id.main_container, ProfileFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.main_container, PostFragment()).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
