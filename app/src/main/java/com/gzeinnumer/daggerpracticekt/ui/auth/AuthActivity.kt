@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.gzeinnumer.daggerpracticekt.R
+import com.gzeinnumer.daggerpracticekt.di.Named
+import com.gzeinnumer.daggerpracticekt.network.authApi.model.ResponseLogin
 import com.gzeinnumer.daggerpracticekt.ui.main.MainActivity
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
@@ -35,6 +37,14 @@ class AuthActivity : DaggerAppCompatActivity() {
     lateinit var providerFactory: ViewModelProviderFactory
     private lateinit var viewModel: AuthVM
 
+    @Inject
+    @Named("app_login")
+    lateinit var responseLogin1: ResponseLogin
+
+    @Inject
+    @Named("auth_login")
+    lateinit var responseLogin2: ResponseLogin
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
@@ -44,6 +54,9 @@ class AuthActivity : DaggerAppCompatActivity() {
         setLogo()
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(AuthVM::class.java)
+
+        Log.d(TAG, "onCreate: responseLogin1 : ${responseLogin1.website}")
+        Log.d(TAG, "onCreate: responseLogin2 : ${responseLogin2.website}")
 
         login_button.setOnClickListener(View.OnClickListener {
             if (TextUtils.isEmpty(user_id_input.text.toString())) {

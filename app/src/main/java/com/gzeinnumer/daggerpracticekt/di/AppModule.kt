@@ -14,7 +14,6 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -62,10 +61,10 @@ class AppModule{
     //disini memori tidak akan di create ulang
     //@Named untuk membuat 2 buah @Provides yang me return hal yang sama, kita butuh menggunakan @Named
     //dan gunakan @Named dinawah @Inject, lihat di MainActivity
-//    @Singleton
-//    @Provides
-//    @Named("app_login")
-//    fun responseLogin1(): ResponseLogin {
-//        return ResponseLogin()
-//    }
+    @Singleton
+    @Provides
+    @Named("app_login")
+    fun responseLogin1(): ResponseLogin {
+        return ResponseLogin("1")
+    }
 }

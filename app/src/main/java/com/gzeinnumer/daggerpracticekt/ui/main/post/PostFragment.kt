@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gzeinnumer.daggerpracticekt.R
-import com.gzeinnumer.daggerpracticekt.ui.auth.AuthResource
 import com.gzeinnumer.daggerpracticekt.ui.main.MainResource
 import com.gzeinnumer.daggerpracticekt.util.VerticalSpacingItemDecoration
 import com.gzeinnumer.daggerpracticekt.vm.ViewModelProviderFactory
@@ -44,6 +43,7 @@ class PostFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
 
         recyclerView = view.findViewById(R.id.recycler_view)
